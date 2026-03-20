@@ -1,0 +1,148 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Champions League Matches</title>
+
+<style>
+:root {
+  --bg1: #0a1f5c;
+  --bg2: #0e2a8a;
+  --accent: #00e0ff;
+  --card: rgba(255,255,255,0.05);
+  --text: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  padding: 20px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* SECTION */
+.section {
+  padding: 20px;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+/* MATCH CARD */
+.match {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+  transition: 0.2s;
+}
+
+.match:hover {
+  transform: scale(1.02);
+}
+
+/* TEAMS */
+.teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.score {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* DETAILS */
+.details {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .score {
+    font-size: 22px;
+  }
+  .team {
+    font-size: 14px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  CHAMPIONS LEAGUE
+</div>
+
+<!-- ACHTELFINALE -->
+<div class="section">
+  <h2>Achtelfinale</h2>
+
+  <div class="match">
+    <div class="teams">
+      <div class="team">Radion</div>
+      <div class="score">4 - 0</div>
+      <div class="team">Abdi</div>
+    </div>
+    <div class="details">
+      AGG: 4-1 • Tore: 25', 62', 71', 90+4'
+    </div>
+  </div>
+
+</div>
+
+<!-- LIGAPHASE -->
+<div class="section">
+  <h2>Ligaphase</h2>
+
+  <div class="match">
+    <div class="teams">
+      <div class="team">Borislav</div>
+      <div class="score">2 - 0</div>
+      <div class="team">Elias</div>
+    </div>
+  </div>
+
+  <div class="match">
+    <div class="teams">
+      <div class="team">Elias</div>
+      <div class="score">1 - 2</div>
+      <div class="team">Abdi</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
+```
