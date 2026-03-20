@@ -3,1018 +3,797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UEFA Champions League</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<title>Champions League</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ucl-blue:#001489;
-  --ucl-dark:#00053a;
-  --ucl-mid:#0a1f6e;
-  --ucl-light:#1a3aad;
-  --accent:#00eaff;
-  --gold:#f5c518;
-  --white:#ffffff;
-  --gray:#8a9bb8;
-  --card-bg:rgba(255,255,255,0.05);
-  --border:rgba(255,255,255,0.1);
+  --blue:#001489;
+  --dark:#00042e;
+  --mid:#05135c;
+  --cyan:#00d4f5;
+  --white:#fff;
+  --muted:rgba(255,255,255,0.45);
+  --border:rgba(255,255,255,0.08);
+  --card:rgba(255,255,255,0.04);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-  background:#00053a;
-  color:var(--white);
-  font-family:'Source Sans 3',Arial,sans-serif;
-  overflow-x:hidden;
+  background:#00042e;
+  color:#fff;
+  font-family:'Barlow',sans-serif;
   min-height:100vh;
 }
 
-/* ─── NAVBAR ─────────────────────────────── */
-.nav{
-  background:linear-gradient(90deg,#001050,#001489);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+nav{
+  background:#001489;
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  height:56px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
   position:sticky;
   top:0;
-  z-index:100;
-  box-shadow:0 2px 20px rgba(0,0,0,0.5);
+  z-index:50;
 }
 
-.nav-inner{
-  max-width:1200px;
-  margin:auto;
+.logo{
   display:flex;
   align-items:center;
-  gap:0;
-  padding:0 20px;
-  height:60px;
-}
-
-/* UCL Logo SVG */
-.ucl-logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-right:25px;
-  text-decoration:none;
+  gap:9px;
+  margin-right:28px;
   flex-shrink:0;
 }
 
-.ucl-logo svg{
-  width:44px;
-  height:44px;
+.logo-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  line-height:1.2;
 }
 
 .nav-links{
   display:flex;
-  gap:0;
   overflow-x:auto;
   scrollbar-width:none;
-  flex:1;
 }
-
 .nav-links::-webkit-scrollbar{display:none}
 
-.nav-link{
-  padding:0 16px;
-  height:60px;
+.nl{
+  padding:0 15px;
+  height:56px;
   display:flex;
   align-items:center;
-  font-size:13.5px;
-  font-weight:600;
-  letter-spacing:.5px;
-  white-space:nowrap;
-  cursor:pointer;
-  color:rgba(255,255,255,0.75);
-  transition:color .2s, background .2s;
-  border-bottom:3px solid transparent;
-  text-transform:uppercase;
-}
-
-.nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
-.nav-link.active{color:#00eaff;border-bottom-color:#00eaff;background:rgba(0,234,255,0.06)}
-
-/* ─── HERO ─────────────────────────────── */
-.hero{
-  background:linear-gradient(180deg,#001489 0%,#00053a 100%);
-  position:relative;
-  overflow:hidden;
-  padding:0 20px 40px;
-}
-
-.hero-arcs{
-  position:absolute;
-  top:0;left:0;width:100%;height:100%;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.hero-arcs svg{
-  width:100%;
-  height:100%;
-}
-
-.match-header{
-  max-width:900px;
-  margin:auto;
-  text-align:center;
-  position:relative;
-  z-index:2;
-  padding-top:30px;
-}
-
-.match-meta{
   font-size:13px;
-  letter-spacing:1.5px;
-  color:rgba(255,255,255,0.6);
+  font-weight:600;
+  letter-spacing:.6px;
   text-transform:uppercase;
-  margin-bottom:6px;
+  color:rgba(255,255,255,0.6);
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  white-space:nowrap;
+  transition:color .15s;
+}
+.nl:hover{color:#fff}
+.nl.active{color:#00d4f5;border-bottom-color:#00d4f5}
+
+.page-head{
+  background:linear-gradient(180deg,#001489 0%,#00042e 100%);
+  padding:36px 24px 28px;
+  position:relative;
+  overflow:hidden;
 }
 
-.match-venue{
-  font-size:12px;
-  color:rgba(255,255,255,0.45);
-  margin-bottom:28px;
+.page-head::before{
+  content:"";
+  position:absolute;
+  top:-100px;left:50%;
+  transform:translateX(-50%);
+  width:900px;height:400px;
+  border-radius:50%;
+  border:1px solid rgba(0,212,245,0.09);
+  pointer-events:none;
 }
 
-.match-score-row{
+.page-head::after{
+  content:"";
+  position:absolute;
+  top:-60px;left:50%;
+  transform:translateX(-50%);
+  width:600px;height:300px;
+  border-radius:50%;
+  border:1px solid rgba(0,212,245,0.05);
+  pointer-events:none;
+}
+
+.page-head-inner{
+  max-width:780px;
+  margin:auto;
+  position:relative;
+  z-index:1;
+}
+
+.season-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(0,212,245,0.1);
+  border:1px solid rgba(0,212,245,0.2);
+  border-radius:4px;
+  padding:3px 10px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#00d4f5;
+  margin-bottom:12px;
+}
+
+.page-head h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(28px,6vw,44px);
+  font-weight:800;
+  letter-spacing:1px;
+  line-height:1.05;
+  text-transform:uppercase;
+}
+
+.page-head p{
+  font-size:14px;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+.content{
+  max-width:780px;
+  margin:0 auto;
+  padding:30px 20px 70px;
+}
+
+.round{
+  margin-bottom:36px;
+}
+
+.round-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:12px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:20px;
+  gap:12px;
 }
 
-.match-team{
+.round-label::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+
+.match{
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--card);
+  margin-bottom:8px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:border-color .2s;
+}
+
+.match:hover .match-top{background:rgba(255,255,255,0.05)}
+.match.open{border-color:rgba(0,212,245,0.25)}
+
+.match-top{
   display:flex;
-  flex-direction:column;
+  align-items:center;
+  padding:14px 18px;
+  transition:background .2s;
+}
+
+.t-left{
+  display:flex;
   align-items:center;
   gap:10px;
+  flex:1;
+  justify-content:flex-end;
+}
+
+.t-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  justify-content:flex-start;
+}
+
+.t-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.3px;
+  white-space:nowrap;
+}
+
+.crest{
+  width:32px;height:32px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:800;
+  flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,0.12);
+}
+
+.mid-block{
+  width:100px;
+  text-align:center;
+  flex-shrink:0;
+  padding:0 8px;
+}
+
+.score-display{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:3px;
+  line-height:1;
+}
+
+.vs-display{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:3px;
+  color:var(--muted);
+}
+
+.status-pill{
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+
+.status-pill.done{color:var(--muted)}
+.status-pill.upcoming{color:#00c864}
+
+.chevron{
+  width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  margin-left:8px;
+  color:var(--muted);
+  font-size:11px;
+  transition:transform .25s, color .2s;
+  flex-shrink:0;
+}
+.match.open .chevron{transform:rotate(180deg);color:#00d4f5}
+
+.match-detail{
+  display:none;
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,0.22);
+  padding:20px 18px;
+}
+
+.match.open .match-detail{display:block}
+
+.detail-meta{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.5px;
+  margin-bottom:16px;
+}
+
+.goals-row{
+  display:flex;
+  gap:30px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+.goals-col{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
   min-width:130px;
 }
 
-.team-crest{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.08);
+.goals-col-title{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.goal-item{
   display:flex;
   align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:700;
-  font-family:'Rajdhani',sans-serif;
-  border:2px solid rgba(255,255,255,0.15);
-  flex-shrink:0;
+  gap:7px;
+  font-size:13.5px;
 }
 
-.team-name-hero{
-  font-family:'Rajdhani',sans-serif;
-  font-size:22px;
+.goal-min{
+  font-family:'Barlow Condensed',sans-serif;
   font-weight:700;
-  letter-spacing:.5px;
-}
-
-.hero-score{
-  font-family:'Rajdhani',sans-serif;
-  font-size:62px;
-  font-weight:700;
-  line-height:1;
-  letter-spacing:4px;
-  padding:0 10px;
-}
-
-.hero-score span{opacity:.5;font-size:42px}
-
-.scorers{
-  display:flex;
-  justify-content:center;
-  gap:60px;
-  margin-top:18px;
   font-size:13px;
-  color:rgba(255,255,255,0.65);
+  color:#00d4f5;
+  min-width:34px;
 }
 
-.scorer-col{text-align:center}
-.scorer-col div{margin:3px 0}
-.scorer-goal-icon{display:inline-block;margin-right:5px;font-size:12px}
-
-.agg-bar{
+.agg-strip{
   display:inline-flex;
   align-items:center;
   gap:8px;
   background:rgba(0,0,0,0.3);
-  border-radius:20px;
-  padding:7px 18px;
-  font-size:12.5px;
-  letter-spacing:.5px;
-  margin-top:20px;
-  border:1px solid rgba(255,255,255,0.1);
-}
-
-.agg-winner{
-  background:#00eaff;
-  color:#001489;
-  border-radius:10px;
-  padding:2px 10px;
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-.match-tabs{
-  display:flex;
-  gap:0;
-  max-width:900px;
-  margin:28px auto 0;
-  border-bottom:2px solid rgba(255,255,255,0.1);
-}
-
-.tab{
-  padding:12px 20px;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.55);
-  cursor:pointer;
-  border-bottom:2px solid transparent;
-  margin-bottom:-2px;
-  transition:color .2s;
-}
-
-.tab.active{color:#00eaff;border-bottom-color:#00eaff}
-.tab:hover{color:rgba(255,255,255,0.9)}
-
-/* ─── MAIN CONTENT ─────────────────────────────── */
-.main{
-  max-width:1200px;
-  margin:auto;
-  padding:30px 20px 60px;
-  display:grid;
-  grid-template-columns:1fr 340px;
-  gap:30px;
-}
-
-@media(max-width:900px){
-  .main{grid-template-columns:1fr;padding:20px 15px 50px}
-  .hero-score{font-size:44px}
-  .match-score-row{gap:12px}
-  .team-crest{width:56px;height:56px;font-size:22px}
-  .team-name-hero{font-size:18px}
-  .scorers{gap:30px;font-size:12px}
-}
-
-/* ─── SECTION TITLES ─────────────────────────────── */
-.section-title{
-  font-family:'Rajdhani',sans-serif;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.section-title::after{
-  content:"";
-  flex:1;
-  height:1px;
-  background:rgba(255,255,255,0.1);
-}
-
-/* ─── MATCH CARDS ─────────────────────────────── */
-.match-card{
-  background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.07);
-  border-radius:12px;
-  padding:16px 20px;
-  margin-bottom:12px;
-  transition:transform .2s, box-shadow .2s, border-color .2s;
-  cursor:pointer;
+  border-radius:6px;
+  padding:7px 14px;
+  font-size:12.5px;
+  margin-top:4px;
 }
 
-.match-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 30px rgba(0,0,0,0.4);
-  border-color:rgba(0,234,255,0.2);
-}
-
-.card-stage{
-  font-size:11px;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.badge{
-  background:rgba(0,234,255,0.12);
-  color:#00eaff;
+.agg-win-badge{
+  background:#00d4f5;
+  color:#00042e;
   border-radius:4px;
   padding:2px 8px;
   font-size:10px;
-  letter-spacing:1px;
-  font-weight:700;
-  text-transform:uppercase;
-}
-
-.badge.winner{background:rgba(245,197,24,0.15);color:#f5c518}
-.badge.upcoming{background:rgba(0,200,100,0.12);color:#00c864}
-
-.card-teams{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.card-team{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:16px;
-  font-weight:600;
-  font-family:'Rajdhani',sans-serif;
-  letter-spacing:.5px;
-}
-
-.crest-sm{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.07);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  font-weight:700;
-  flex-shrink:0;
-  border:1.5px solid rgba(255,255,255,0.1);
-}
-
-.card-score{
-  font-family:'Rajdhani',sans-serif;
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:3px;
-  text-align:center;
-  min-width:80px;
-}
-
-.card-score.vs{
-  font-size:16px;
-  opacity:.5;
-  letter-spacing:2px;
-}
-
-.card-detail{
-  margin-top:10px;
-  font-size:12.5px;
-  color:var(--gray);
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px 16px;
-}
-
-.card-detail span{display:flex;align-items:center;gap:4px}
-
-/* ─── SIDEBAR / FINAL CARD ─────────────────────────────── */
-.sidebar{}
-
-.final-card{
-  background:linear-gradient(145deg,#001489,#0a1f6e);
-  border:1px solid rgba(0,234,255,0.25);
-  border-radius:14px;
-  padding:24px;
-  position:relative;
-  overflow:hidden;
-  margin-bottom:20px;
-  box-shadow:0 0 40px rgba(0,20,137,0.4);
-}
-
-.final-card::before{
-  content:"";
-  position:absolute;
-  top:-60px;right:-60px;
-  width:200px;height:200px;
-  background:radial-gradient(circle,rgba(0,234,255,0.12),transparent 70%);
-  pointer-events:none;
-}
-
-.final-label{
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#00eaff;
-  font-weight:700;
-  margin-bottom:20px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.final-label::before{
-  content:"";
-  width:6px;height:6px;
-  border-radius:50%;
-  background:#00eaff;
-  box-shadow:0 0 8px #00eaff;
-  animation:blink 2s ease-in-out infinite;
-}
-
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
-.final-teams{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:20px;
-}
-
-.final-team{
-  text-align:center;
-}
-
-.final-crest{
-  width:56px;height:56px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.08);
-  border:2px solid rgba(255,255,255,0.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:700;
-  margin:0 auto 8px;
-  font-family:'Rajdhani',sans-serif;
-}
-
-.final-team-name{
-  font-family:'Rajdhani',sans-serif;
-  font-size:16px;font-weight:700;
-}
-
-.final-vs{
-  font-family:'Rajdhani',sans-serif;
-  font-size:22px;font-weight:700;
-  opacity:.4;
-  letter-spacing:3px;
-}
-
-.final-date{
-  background:rgba(0,0,0,0.3);
-  border-radius:8px;
-  padding:10px;
-  text-align:center;
-  font-size:13px;
-  color:rgba(255,255,255,0.7);
-  margin-bottom:18px;
-  border:1px solid rgba(255,255,255,0.06);
-}
-
-.lineups{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.lineup-box{
-  background:rgba(0,0,0,0.2);
-  border-radius:10px;
-  padding:12px;
-}
-
-.lineup-title{
-  font-size:11px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:1px;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.5);
+}
+
+.stats-section{margin-top:16px}
+
+.stats-title{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--muted);
   margin-bottom:10px;
 }
 
-.player-row{
-  display:flex;
+.stat-line{
+  display:grid;
+  grid-template-columns:38px 1fr 38px;
   align-items:center;
   gap:8px;
-  padding:5px 0;
-  font-size:13px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-
-.player-row:last-child{border-bottom:none}
-
-.player-num{
-  font-family:'Rajdhani',sans-serif;
+  margin-bottom:8px;
+  font-family:'Barlow Condensed',sans-serif;
   font-size:14px;
   font-weight:700;
-  color:var(--accent);
-  min-width:18px;
 }
 
-/* ─── STATS WIDGET ─────────────────────────────── */
-.stats-widget{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:20px;
+.stat-lbl{
+  grid-column:1/-1;
+  text-align:center;
+  font-family:'Barlow',sans-serif;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:3px;
+  margin-top:4px;
 }
 
-.stat-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-  font-size:13px;
-}
+.bars{display:flex;gap:3px;height:5px}
 
-.stat-label{
-  min-width:80px;
-  color:var(--gray);
-  font-size:12px;
-  text-align:right;
-}
-
-.stat-label.right{text-align:left}
-
-.stat-bar-wrap{
+.bar-wrap{
   flex:1;
-  height:5px;
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.07);
   border-radius:3px;
   overflow:hidden;
-  position:relative;
+  display:flex;
 }
 
-.stat-bar{
-  height:100%;
-  background:linear-gradient(90deg,#001489,#00eaff);
+.bar{
+  height:5px;
   border-radius:3px;
-  transition:width .6s ease;
+  background:linear-gradient(90deg,#001489,#00d4f5);
 }
 
-.stat-bar.right{
-  background:linear-gradient(90deg,#f5c518,#ff8800);
+.bar.r{
+  background:linear-gradient(90deg,#f5c518,#ff6b00);
   margin-left:auto;
 }
 
-.stat-val{
-  font-family:'Rajdhani',sans-serif;
-  font-weight:700;
-  font-size:15px;
-  min-width:24px;
-  text-align:center;
+.lineups-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:16px;
 }
 
-/* ─── TABLE ─────────────────────────────── */
-.table-widget{
+.lu-box{
   background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:20px;
+  border-radius:8px;
+  padding:12px;
+  border:1px solid var(--border);
 }
 
-.table-head{
-  display:grid;
-  grid-template-columns:28px 1fr 28px 28px 28px 28px 40px;
-  gap:4px;
-  padding:10px 16px;
-  font-size:11px;
+.lu-title{
+  font-size:10px;
   font-weight:700;
-  letter-spacing:1px;
+  letter-spacing:1.5px;
   text-transform:uppercase;
-  color:var(--gray);
-  border-bottom:1px solid rgba(255,255,255,0.07);
-  background:rgba(0,0,0,0.2);
+  color:var(--muted);
+  margin-bottom:8px;
 }
 
-.table-row{
-  display:grid;
-  grid-template-columns:28px 1fr 28px 28px 28px 28px 40px;
-  gap:4px;
-  padding:10px 16px;
-  font-size:13.5px;
-  align-items:center;
+.lu-player{
+  font-size:13px;
+  padding:4px 0;
   border-bottom:1px solid rgba(255,255,255,0.04);
-  transition:background .2s;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:rgba(255,255,255,0.85);
 }
+.lu-player:last-child{border-bottom:none}
+.lu-player::before{content:"–";color:var(--muted);font-size:11px}
 
-.table-row:last-child{border-bottom:none}
-.table-row:hover{background:rgba(255,255,255,0.04)}
-.table-row.highlight{background:rgba(0,234,255,0.06);border-left:3px solid #00eaff}
-
-.pos{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:var(--gray);text-align:center}
-.team-cell{display:flex;align-items:center;gap:8px;font-weight:600;font-family:'Rajdhani',sans-serif;font-size:14px}
-.pts{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;text-align:center}
-.num{text-align:center;color:var(--gray);font-size:13px}
-
-.form-dots{display:flex;gap:3px}
-.dot{width:8px;height:8px;border-radius:50%}
-.dot.w{background:#00c864}
-.dot.d{background:#888}
-.dot.l{background:#e03}
-
-/* ─── FOOTER ─────────────────────────────── */
-.footer{
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:24px 20px;
+footer{
+  border-top:1px solid var(--border);
+  padding:20px 24px;
   text-align:center;
   font-size:12px;
-  color:rgba(255,255,255,0.25);
+  color:rgba(255,255,255,0.2);
   background:rgba(0,0,0,0.3);
 }
 
-/* ─── MOBILE ADJUSTMENTS ─────────────────────────────── */
-@media(max-width:600px){
-  .nav-inner{padding:0 12px;gap:0}
-  .nav-link{padding:0 10px;font-size:12px}
-  .table-head,.table-row{grid-template-columns:22px 1fr 22px 22px 22px 22px 32px;padding:8px 10px;font-size:11px;gap:2px}
-  .hero{padding:0 12px 30px}
-  .scorers{flex-direction:column;gap:8px;align-items:center}
-  .main{padding:15px 12px 40px}
-  .lineups{grid-template-columns:1fr 1fr}
+@media(max-width:540px){
+  nav{padding:0 12px}
+  .nl{padding:0 10px;font-size:11.5px}
+  .t-name{font-size:15px}
+  .score-display{font-size:22px}
+  .mid-block{width:76px}
+  .crest{width:28px;height:28px;font-size:11px}
+  .match-top{padding:12px 12px}
+  .goals-row{gap:16px}
+  .page-head{padding:22px 16px 18px}
+  .content{padding:18px 12px 50px}
+  .logo-text{font-size:11px}
 }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="ucl-logo" href="#">
-      <!-- Official UCL Star Ball Logo SVG -->
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bg" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#001489"/>
-            <stop offset="100%" stop-color="#00053a"/>
-          </radialGradient>
-        </defs>
-        <circle cx="60" cy="60" r="58" fill="url(#bg)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-        <!-- Star ball pattern -->
-        <g fill="white" opacity="0.95">
-          <!-- Centre hexagon -->
-          <polygon points="60,42 71,49 71,63 60,70 49,63 49,49" fill="none" stroke="white" stroke-width="2"/>
-          <!-- Top -->
-          <polygon points="60,20 65,32 55,32" />
-          <!-- Top-right -->
-          <polygon points="82,30 78,42 88,46" />
-          <!-- Right -->
-          <polygon points="98,52 86,54 90,64" />
-          <!-- Bottom-right -->
-          <polygon points="86,76 76,70 82,82" />
-          <!-- Bottom -->
-          <polygon points="60,96 56,84 64,84" />
-          <!-- Bottom-left -->
-          <polygon points="34,76 44,70 38,82" />
-          <!-- Left -->
-          <polygon points="22,52 34,54 30,64" />
-          <!-- Top-left -->
-          <polygon points="38,30 42,42 32,46" />
-        </g>
-        <text x="60" y="110" text-anchor="middle" fill="white" font-size="8" font-family="Arial" font-weight="bold" letter-spacing="1" opacity="0.7">CHAMPIONS LEAGUE</text>
-      </svg>
-    </a>
-    <div class="nav-links">
-      <div class="nav-link active">Matches</div>
-      <div class="nav-link">Tabelle</div>
-      <div class="nav-link">Stats</div>
-      <div class="nav-link">Teams</div>
-      <div class="nav-link">Final</div>
-    </div>
+<nav>
+  <div class="logo">
+    <svg width="36" height="36" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="56" fill="#001489" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+      <g fill="white">
+        <polygon points="60,22 64,34 56,34"/>
+        <polygon points="84,32 80,44 90,48"/>
+        <polygon points="96,56 84,57 88,67"/>
+        <polygon points="83,78 74,72 80,84"/>
+        <polygon points="60,94 56,82 64,82"/>
+        <polygon points="37,78 46,72 40,84"/>
+        <polygon points="24,56 36,57 32,67"/>
+        <polygon points="36,32 40,44 30,48"/>
+        <polygon points="60,44 70,50 70,62 60,68 50,62 50,50" fill="none" stroke="white" stroke-width="2"/>
+      </g>
+    </svg>
+    <div class="logo-text">Champions<br>League</div>
+  </div>
+  <div class="nav-links">
+    <div class="nl active">Matches</div>
+    <div class="nl">Tabelle</div>
+    <div class="nl">Stats</div>
+    <div class="nl">Teams</div>
+    <div class="nl">Final</div>
   </div>
 </nav>
 
-<!-- HERO MATCH DISPLAY: Achtelfinale Highlight -->
-<div class="hero">
-  <div class="hero-arcs">
-    <svg viewBox="0 0 1440 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="720" cy="-60" rx="900" ry="350" fill="none" stroke="rgba(0,234,255,0.12)" stroke-width="2"/>
-      <ellipse cx="720" cy="-20" rx="700" ry="280" fill="none" stroke="rgba(0,234,255,0.07)" stroke-width="1.5"/>
-      <ellipse cx="720" cy="20" rx="500" ry="210" fill="none" stroke="rgba(0,234,255,0.05)" stroke-width="1"/>
-      <!-- Side arcs -->
-      <path d="M0,80 Q200,20 400,100 T800,80" stroke="rgba(245,197,24,0.15)" fill="none" stroke-width="2"/>
-      <path d="M1440,80 Q1240,20 1040,100 T640,80" stroke="rgba(0,234,255,0.1)" fill="none" stroke-width="2"/>
-    </svg>
-  </div>
-
-  <div class="match-header">
-    <div class="match-meta">Achtelfinale • Rückspiel • UCL 2025/26</div>
-    <div class="match-venue">Radion Arena • Heimspiel</div>
-
-    <div class="match-score-row">
-      <div class="match-team">
-        <div class="team-crest" style="background:linear-gradient(135deg,#c41e3a,#8b0000);border-color:rgba(196,30,58,0.5)">R</div>
-        <div class="team-name-hero">Radion</div>
-      </div>
-      <div>
-        <div class="hero-score">4 <span>–</span> 0</div>
-      </div>
-      <div class="match-team">
-        <div class="team-crest" style="background:linear-gradient(135deg,#006633,#004d26);border-color:rgba(0,102,51,0.5)">A</div>
-        <div class="team-name-hero">Abdi</div>
-      </div>
-    </div>
-
-    <div class="scorers">
-      <div class="scorer-col">
-        <div><span class="scorer-goal-icon">⚽</span>25' – Radion</div>
-        <div><span class="scorer-goal-icon">⚽</span>62' – Radion</div>
-        <div><span class="scorer-goal-icon">⚽</span>71' – Radion</div>
-        <div><span class="scorer-goal-icon">⚽</span>90+4' – Radion</div>
-      </div>
-    </div>
-
-    <div style="margin-top:16px">
-      <div class="agg-bar">
-        <span style="opacity:.6;font-size:11px;letter-spacing:1px;text-transform:uppercase">Gesamt</span>
-        <strong style="font-family:'Rajdhani',sans-serif;font-size:16px;letter-spacing:2px">4 – 1</strong>
-        <div class="agg-winner">Radion weiter</div>
-      </div>
-    </div>
-
-    <div class="match-tabs">
-      <div class="tab active">Übersicht</div>
-      <div class="tab">Statistiken</div>
-      <div class="tab">Aufstellung</div>
-      <div class="tab">Infos</div>
-    </div>
+<div class="page-head">
+  <div class="page-head-inner">
+    <div class="season-badge">Saison 2025/26</div>
+    <h1>UEFA Champions<br>League</h1>
+    <p>Alle Spiele — klick auf ein Match für Details</p>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="main">
+<div class="content">
 
-  <!-- LEFT COLUMN -->
-  <div class="left-col">
+  <div class="round">
+    <div class="round-label">Achtelfinale</div>
 
-    <!-- ACHTELFINALE -->
-    <div class="section-title">Achtelfinale</div>
-
-    <div class="match-card">
-      <div class="card-stage">
-        Rückspiel
-        <div class="badge winner">✓ Radion weiter</div>
-      </div>
-      <div class="card-teams">
-        <div class="card-team">
-          <div class="crest-sm" style="background:linear-gradient(135deg,#c41e3a,#8b0000)">R</div>
-          Radion
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Radion</span>
+          <div class="crest" style="background:linear-gradient(135deg,#c41e3a,#8b0000)">R</div>
         </div>
-        <div class="card-score">4 – 0</div>
-        <div class="card-team" style="justify-content:flex-end">
-          Abdi
-          <div class="crest-sm" style="background:linear-gradient(135deg,#006633,#004d26)">A</div>
+        <div class="mid-block">
+          <div class="score-display">4–0</div>
+          <span class="status-pill done">Rückspiel</span>
         </div>
-      </div>
-      <div class="card-detail">
-        <span>⚽ 25' Radion</span>
-        <span>⚽ 62' Radion</span>
-        <span>⚽ 71' Radion</span>
-        <span>⚽ 90+4' Radion</span>
-        <span style="color:rgba(255,255,255,0.3)">•</span>
-        <span>Gesamt: <strong style="color:#fff">4–1</strong></span>
-      </div>
-    </div>
-
-    <!-- LIGAPHASE -->
-    <div class="section-title" style="margin-top:30px">Ligaphase</div>
-
-    <div class="match-card">
-      <div class="card-stage">
-        Spieltag 3 · Ligaphase
-        <div class="badge">Abgeschlossen</div>
-      </div>
-      <div class="card-teams">
-        <div class="card-team">
-          <div class="crest-sm" style="background:linear-gradient(135deg,#8b0045,#5a0030)">B</div>
-          Borislav
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#1a6b3a,#0d3d20)">A</div>
+          <span class="t-name">Abdi</span>
         </div>
-        <div class="card-score">2 – 0</div>
-        <div class="card-team" style="justify-content:flex-end">
-          Elias
-          <div class="crest-sm" style="background:linear-gradient(135deg,#003d99,#001f66)">E</div>
-        </div>
+        <div class="chevron">▼</div>
       </div>
-      <div class="card-detail">
-        <span>⚽ Borislav (2 Tore)</span>
-        <span>🔒 Zu Null gewonnen</span>
-      </div>
-    </div>
-
-    <div class="match-card">
-      <div class="card-stage">
-        Spieltag 4 · Ligaphase
-        <div class="badge">Abgeschlossen</div>
-      </div>
-      <div class="card-teams">
-        <div class="card-team">
-          <div class="crest-sm" style="background:linear-gradient(135deg,#003d99,#001f66)">E</div>
-          Elias
-        </div>
-        <div class="card-score">1 – 2</div>
-        <div class="card-team" style="justify-content:flex-end">
-          Abdi
-          <div class="crest-sm" style="background:linear-gradient(135deg,#006633,#004d26)">A</div>
-        </div>
-      </div>
-      <div class="card-detail">
-        <span>⚽ Elias 1 Tor</span>
-        <span>⚽ Abdi 2 Tore</span>
-      </div>
-    </div>
-
-    <!-- LIGAPHASE TABELLE -->
-    <div class="section-title" style="margin-top:30px">Ligaphase · Tabelle</div>
-
-    <div class="table-widget">
-      <div class="table-head">
-        <div>#</div>
-        <div>Team</div>
-        <div style="text-align:center">Sp</div>
-        <div style="text-align:center">S</div>
-        <div style="text-align:center">U</div>
-        <div style="text-align:center">N</div>
-        <div style="text-align:center">Pkt</div>
-      </div>
-      <div class="table-row highlight">
-        <div class="pos">1</div>
-        <div class="team-cell"><div class="crest-sm" style="background:linear-gradient(135deg,#c41e3a,#8b0000);width:26px;height:26px;font-size:11px">R</div>Radion</div>
-        <div class="num">2</div><div class="num">2</div><div class="num">0</div><div class="num">0</div>
-        <div class="pts">6</div>
-      </div>
-      <div class="table-row">
-        <div class="pos">2</div>
-        <div class="team-cell"><div class="crest-sm" style="background:linear-gradient(135deg,#8b0045,#5a0030);width:26px;height:26px;font-size:11px">B</div>Borislav</div>
-        <div class="num">1</div><div class="num">1</div><div class="num">0</div><div class="num">0</div>
-        <div class="pts">3</div>
-      </div>
-      <div class="table-row">
-        <div class="pos">3</div>
-        <div class="team-cell"><div class="crest-sm" style="background:linear-gradient(135deg,#006633,#004d26);width:26px;height:26px;font-size:11px">A</div>Abdi</div>
-        <div class="num">2</div><div class="num">1</div><div class="num">0</div><div class="num">1</div>
-        <div class="pts">3</div>
-      </div>
-      <div class="table-row">
-        <div class="pos">4</div>
-        <div class="team-cell"><div class="crest-sm" style="background:linear-gradient(135deg,#003d99,#001f66);width:26px;height:26px;font-size:11px">E</div>Elias</div>
-        <div class="num">2</div><div class="num">0</div><div class="num">0</div><div class="num">2</div>
-        <div class="pts">0</div>
-      </div>
-    </div>
-
-    <!-- MATCH STATS -->
-    <div class="section-title" style="margin-top:30px">Match Stats · Radion vs Abdi</div>
-
-    <div class="stats-widget">
-      <div class="stat-row">
-        <div class="stat-val">4</div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--gray);text-align:center;margin-bottom:4px">Tore</div>
-          <div style="display:flex;gap:4px">
-            <div class="stat-bar-wrap"><div class="stat-bar" style="width:100%"></div></div>
-            <div class="stat-bar-wrap"><div class="stat-bar right" style="width:0%"></div></div>
+      <div class="match-detail">
+        <div class="detail-meta">Rückspiel · Radion Arena · UCL 2025/26</div>
+        <div class="goals-row">
+          <div class="goals-col">
+            <div class="goals-col-title">Radion</div>
+            <div class="goal-item"><span class="goal-min">25'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">62'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">71'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">90+4'</span>⚽ Radion</div>
+          </div>
+          <div class="goals-col">
+            <div class="goals-col-title">Abdi</div>
+            <div class="goal-item" style="color:var(--muted);font-size:13px">Keine Tore</div>
           </div>
         </div>
-        <div class="stat-val">0</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-val">7</div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--gray);text-align:center;margin-bottom:4px">Schüsse</div>
-          <div style="display:flex;gap:4px">
-            <div class="stat-bar-wrap"><div class="stat-bar" style="width:78%"></div></div>
-            <div class="stat-bar-wrap"><div class="stat-bar right" style="width:22%"></div></div>
+        <div class="agg-strip">
+          <span style="color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">Gesamt</span>
+          <strong style="font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:2px">4–1</strong>
+          <div class="agg-win-badge">Radion weiter</div>
+        </div>
+        <div class="stats-section">
+          <div class="stats-title">Match Statistiken</div>
+          <div class="stat-lbl">Tore</div>
+          <div class="stat-line">
+            <span>4</span>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar" style="width:100%"></div></div>
+              <div class="bar-wrap"><div class="bar r" style="width:0%"></div></div>
+            </div>
+            <span>0</span>
           </div>
-        </div>
-        <div class="stat-val">2</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-val">62%</div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--gray);text-align:center;margin-bottom:4px">Ballbesitz</div>
-          <div style="display:flex;gap:4px">
-            <div class="stat-bar-wrap"><div class="stat-bar" style="width:62%"></div></div>
-            <div class="stat-bar-wrap"><div class="stat-bar right" style="width:38%"></div></div>
+          <div class="stat-lbl">Schüsse</div>
+          <div class="stat-line">
+            <span>7</span>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar" style="width:78%"></div></div>
+              <div class="bar-wrap"><div class="bar r" style="width:22%"></div></div>
+            </div>
+            <span>2</span>
           </div>
-        </div>
-        <div class="stat-val">38%</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-val">5</div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--gray);text-align:center;margin-bottom:4px">Ecken</div>
-          <div style="display:flex;gap:4px">
-            <div class="stat-bar-wrap"><div class="stat-bar" style="width:83%"></div></div>
-            <div class="stat-bar-wrap"><div class="stat-bar right" style="width:17%"></div></div>
+          <div class="stat-lbl">Ballbesitz</div>
+          <div class="stat-line">
+            <span>62%</span>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar" style="width:62%"></div></div>
+              <div class="bar-wrap"><div class="bar r" style="width:38%"></div></div>
+            </div>
+            <span>38%</span>
           </div>
-        </div>
-        <div class="stat-val">1</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-val">1</div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--gray);text-align:center;margin-bottom:4px">Gelbe Karten</div>
-          <div style="display:flex;gap:4px">
-            <div class="stat-bar-wrap"><div class="stat-bar" style="width:33%"></div></div>
-            <div class="stat-bar-wrap"><div class="stat-bar right" style="width:67%"></div></div>
-          </div>
-        </div>
-        <div class="stat-val">2</div>
-      </div>
-    </div>
-
-  </div><!-- /left col -->
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
-    <!-- UCL FINAL -->
-    <div class="final-card">
-      <div class="final-label">UCL Final · Montag</div>
-
-      <div class="final-teams">
-        <div class="final-team">
-          <div class="final-crest" style="background:linear-gradient(135deg,#c41e3a,#8b0000);">G</div>
-          <div class="final-team-name">Galatasaray</div>
-          <div style="font-size:11px;color:var(--gray);margin-top:4px">Radion / Abdi</div>
-        </div>
-        <div class="final-vs">VS</div>
-        <div class="final-team">
-          <div class="final-crest" style="background:linear-gradient(135deg,#003087,#001f5c);">P</div>
-          <div class="final-team-name">PSG</div>
-          <div style="font-size:11px;color:var(--gray);margin-top:4px">Elias / Borislav</div>
-        </div>
-      </div>
-
-      <div class="final-date">
-        📅 Montag · Anpfiff TBD<br>
-        <span style="font-size:11px;color:rgba(255,255,255,0.4)">Ort: TBA</span>
-      </div>
-
-      <div class="section-title" style="font-size:11px;margin-bottom:12px">Aufstellungen</div>
-
-      <div class="lineups">
-        <div class="lineup-box">
-          <div class="lineup-title">Galatasaray</div>
-          <div class="player-row"><span class="player-num">–</span>Radion</div>
-          <div class="player-row"><span class="player-num">–</span>Abdi</div>
-        </div>
-        <div class="lineup-box">
-          <div class="lineup-title">PSG</div>
-          <div class="player-row"><span class="player-num">–</span>Elias</div>
-          <div class="player-row"><span class="player-num">–</span>Borislav</div>
         </div>
       </div>
     </div>
 
-    <!-- WEG ZUM FINALE -->
-    <div class="section-title">Weg zum Finale</div>
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Abdi</span>
+          <div class="crest" style="background:linear-gradient(135deg,#1a6b3a,#0d3d20)">A</div>
+        </div>
+        <div class="mid-block">
+          <div class="score-display">1–4</div>
+          <span class="status-pill done">Hinspiel</span>
+        </div>
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#c41e3a,#8b0000)">R</div>
+          <span class="t-name">Radion</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="match-detail">
+        <div class="detail-meta">Hinspiel · Abdi Arena · UCL 2025/26</div>
+        <div class="goals-row">
+          <div class="goals-col">
+            <div class="goals-col-title">Abdi</div>
+            <div class="goal-item"><span class="goal-min">38'</span>⚽ Abdi</div>
+          </div>
+          <div class="goals-col">
+            <div class="goals-col-title">Radion</div>
+            <div class="goal-item"><span class="goal-min">12'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">55'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">73'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">88'</span>⚽ Radion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="match-card" style="margin-bottom:10px">
-      <div class="card-stage">Ligaphase<div class="badge winner">✓</div></div>
-      <div style="font-size:13px;line-height:1.9;color:rgba(255,255,255,0.7)">
-        <div>Radion <strong style="color:#fff;font-family:'Rajdhani',sans-serif">2S 0N</strong> → <span style="color:#00eaff">6 Pkt</span></div>
-        <div>Borislav <strong style="color:#fff;font-family:'Rajdhani',sans-serif">1S 0N</strong> → <span style="color:#00eaff">3 Pkt</span></div>
-        <div>Abdi <strong style="color:#fff;font-family:'Rajdhani',sans-serif">1S 1N</strong> → <span style="color:#00eaff">3 Pkt</span></div>
-        <div>Elias <strong style="color:#fff;font-family:'Rajdhani',sans-serif">0S 2N</strong> → <span style="color:var(--gray)">0 Pkt</span></div>
+  <div class="round">
+    <div class="round-label">Ligaphase</div>
+
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Borislav</span>
+          <div class="crest" style="background:linear-gradient(135deg,#7b1fa2,#4a0072)">B</div>
+        </div>
+        <div class="mid-block">
+          <div class="score-display">2–0</div>
+          <span class="status-pill done">Spieltag 3</span>
+        </div>
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#1565c0,#0a3d7c)">E</div>
+          <span class="t-name">Elias</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="match-detail">
+        <div class="detail-meta">Spieltag 3 · Ligaphase · UCL 2025/26</div>
+        <div class="goals-row">
+          <div class="goals-col">
+            <div class="goals-col-title">Borislav</div>
+            <div class="goal-item"><span class="goal-min">34'</span>⚽ Borislav</div>
+            <div class="goal-item"><span class="goal-min">78'</span>⚽ Borislav</div>
+          </div>
+          <div class="goals-col">
+            <div class="goals-col-title">Elias</div>
+            <div class="goal-item" style="color:var(--muted);font-size:13px">Keine Tore</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:12.5px;color:var(--muted)">🔒 Zu Null</div>
+        <div class="lineups-row">
+          <div class="lu-box">
+            <div class="lu-title">Borislav</div>
+            <div class="lu-player">Borislav</div>
+          </div>
+          <div class="lu-box">
+            <div class="lu-title">Elias</div>
+            <div class="lu-player">Elias</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="match-card">
-      <div class="card-stage">Achtelfinale<div class="badge winner">✓</div></div>
-      <div style="font-size:13px;line-height:2;color:rgba(255,255,255,0.7)">
-        <div>Radion def. Abdi <strong style="color:#fff;font-family:'Rajdhani',sans-serif">4–1</strong> (ges.)</div>
-        <div>Borislav → <span style="color:#00eaff">Final via Galatasaray</span></div>
-        <div>Elias → <span style="color:#00eaff">Final via PSG</span></div>
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Elias</span>
+          <div class="crest" style="background:linear-gradient(135deg,#1565c0,#0a3d7c)">E</div>
+        </div>
+        <div class="mid-block">
+          <div class="score-display">1–2</div>
+          <span class="status-pill done">Spieltag 4</span>
+        </div>
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#1a6b3a,#0d3d20)">A</div>
+          <span class="t-name">Abdi</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="match-detail">
+        <div class="detail-meta">Spieltag 4 · Ligaphase · UCL 2025/26</div>
+        <div class="goals-row">
+          <div class="goals-col">
+            <div class="goals-col-title">Elias</div>
+            <div class="goal-item"><span class="goal-min">53'</span>⚽ Elias</div>
+          </div>
+          <div class="goals-col">
+            <div class="goals-col-title">Abdi</div>
+            <div class="goal-item"><span class="goal-min">29'</span>⚽ Abdi</div>
+            <div class="goal-item"><span class="goal-min">85'</span>⚽ Abdi</div>
+          </div>
+        </div>
+        <div class="lineups-row">
+          <div class="lu-box">
+            <div class="lu-title">Elias</div>
+            <div class="lu-player">Elias</div>
+          </div>
+          <div class="lu-box">
+            <div class="lu-title">Abdi</div>
+            <div class="lu-player">Abdi</div>
+          </div>
+        </div>
       </div>
     </div>
 
-  </div><!-- /sidebar -->
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Radion</span>
+          <div class="crest" style="background:linear-gradient(135deg,#c41e3a,#8b0000)">R</div>
+        </div>
+        <div class="mid-block">
+          <div class="score-display">3–1</div>
+          <span class="status-pill done">Spieltag 2</span>
+        </div>
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#7b1fa2,#4a0072)">B</div>
+          <span class="t-name">Borislav</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="match-detail">
+        <div class="detail-meta">Spieltag 2 · Ligaphase · UCL 2025/26</div>
+        <div class="goals-row">
+          <div class="goals-col">
+            <div class="goals-col-title">Radion</div>
+            <div class="goal-item"><span class="goal-min">18'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">47'</span>⚽ Radion</div>
+            <div class="goal-item"><span class="goal-min">90'</span>⚽ Radion</div>
+          </div>
+          <div class="goals-col">
+            <div class="goals-col-title">Borislav</div>
+            <div class="goal-item"><span class="goal-min">61'</span>⚽ Borislav</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</div><!-- /main -->
+  <div class="round">
+    <div class="round-label">UCL Final</div>
 
-<div class="footer">
-  Nicht-offizielles Champions League UI Konzept · 2025/26
+    <div class="match" onclick="toggle(this)">
+      <div class="match-top">
+        <div class="t-left">
+          <span class="t-name">Galatasaray</span>
+          <div class="crest" style="background:linear-gradient(135deg,#e8a000,#c44c00)">G</div>
+        </div>
+        <div class="mid-block">
+          <div class="vs-display">VS</div>
+          <span class="status-pill upcoming">Montag</span>
+        </div>
+        <div class="t-right">
+          <div class="crest" style="background:linear-gradient(135deg,#003087,#001a5c)">P</div>
+          <span class="t-name">PSG</span>
+        </div>
+        <div class="chevron">▼</div>
+      </div>
+      <div class="match-detail">
+        <div class="detail-meta">UCL Final · Montag · Ort: TBA</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.8">
+          Das große Finale. Wer holt den Titel?
+        </div>
+        <div class="lineups-row">
+          <div class="lu-box">
+            <div class="lu-title">Galatasaray</div>
+            <div class="lu-player">Radion</div>
+            <div class="lu-player">Abdi</div>
+          </div>
+          <div class="lu-box">
+            <div class="lu-title">PSG</div>
+            <div class="lu-player">Elias</div>
+            <div class="lu-player">Borislav</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:rgba(0,212,245,0.06);border:1px solid rgba(0,212,245,0.14);border-radius:8px;font-size:13px;text-align:center;color:rgba(255,255,255,0.65)">
+          📅 Anpfiff wird noch bekannt gegeben
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<footer>
+  UEFA EURO 2026 — Roleplay (NON-OFFICIAL)
+</footer>
 
 <script>
-// Tab switching
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-  });
-});
-document.querySelectorAll('.nav-link').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
+function toggle(el){
+  el.classList.toggle('open');
+}
+document.querySelectorAll('.nl').forEach(n=>{
+  n.addEventListener('click',()=>{
+    document.querySelectorAll('.nl').forEach(x=>x.classList.remove('active'));
+    n.classList.add('active');
   });
 });
 </script>
